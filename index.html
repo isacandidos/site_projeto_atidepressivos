@@ -10,10 +10,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="assets/lib/atom-one-dark.min.css">
-<script src="assets/lib/highlight.min.js"></script>
-<script src="assets/lib/python.min.js"></script>
-<script src="assets/lib/sql.min.js"></script>
+<link rel="stylesheet" href="atom-one-dark.min.css">
+<script src="highlight.min.js"></script>
+<script src="python.min.js"></script>
+<script src="sql.min.js"></script>
 
 <style>
 :root {
@@ -498,332 +498,104 @@ button { font: inherit; cursor: pointer; }
   transition: opacity 0.25s ease;
 }
 .code-body.is-expanded .code-fade { opacity: 0; }
+
 .expand-bar {
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  padding: 10px 18px;
-  background: var(--surface-1);
+  width: 100%;
+  padding: 10px;
+  background: var(--surface-2);
+  border: none;
   border-top: 1px solid var(--border);
+  color: var(--text-2);
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--text-muted);
-  cursor: pointer;
-  user-select: none;
-  transition: background 0.15s ease, color 0.15s ease;
-  border: none;
-  width: 100%;
-  text-align: center;
-}
-.expand-bar:hover { background: var(--surface-2); color: var(--accent); }
-.expand-bar .expand-icon {
-  display: inline-block;
-  transition: transform 0.25s ease;
-  font-size: 13px;
-  line-height: 1;
-}
-.expand-bar.is-expanded .expand-icon { transform: rotate(180deg); }
-.expand-bar .expand-lines {
-  color: var(--text-dim);
-  font-size: 10px;
-  margin-left: 4px;
-}
-
-/* ── Botão de retorno nos cards de dashboard ────────────────────────────── */
-.chart-card {
-  position: relative;
-  cursor: pointer;
-}
-.chart-back-btn {
-  position: absolute;
-  top: 24px; left: 24px;
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 11px 20px;
-  background: var(--accent);
-  border: 1px solid var(--accent);
-  border-radius: 8px;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--bg);
-  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   transition: all 0.2s ease;
-  z-index: 200;
   cursor: pointer;
-  box-shadow: 0 8px 24px -8px var(--accent-glow);
 }
-.chart-back-btn:hover {
-  background: var(--cyan);
-  border-color: var(--cyan);
-  transform: translateY(-2px);
-  color: var(--bg);
+.expand-bar:hover {
+  background: var(--surface-3);
+  color: var(--accent);
 }
-.chart-back-btn .arrow { font-size: 16px; }
-
-
-/* ── GitHub link no rodapé ──────────────────────────────────────────────── */
-.foot-github {
-  display: inline-flex; align-items: center; gap: 7px;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  text-decoration: none;
-  border: 1px solid var(--border);
-  padding: 5px 12px;
-  border-radius: 6px;
-  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
-}
-.foot-github:hover { color: var(--text); border-color: var(--border-bright); background: var(--surface-1); }
-.foot-github svg { flex-shrink: 0; }
-
-.code-block pre {
-  margin: 0;
-  padding: 20px 24px;
-  overflow-x: auto;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  line-height: 1.7;
-  background: #0D1117;
-}
-/* Align hljs theme background with our palette */
-.code-block .hljs { background: #0D1117 !important; padding: 0 !important; }
-/* Tune a few atom-one-dark tokens for slightly more contrast in our dark UI */
-.hljs-comment, .hljs-quote { color: #6B7693 !important; font-style: italic; }
-.hljs-keyword, .hljs-built_in { color: #C678DD !important; font-weight: 500; }
-.hljs-string { color: #98C379 !important; }
-.hljs-number { color: #D19A66 !important; }
-.hljs-function .hljs-title, .hljs-title.function_ { color: #61AFEF !important; }
-.hljs-params { color: #ABB2BF !important; }
-.hljs-attr, .hljs-property { color: #E06C75 !important; }
-.hljs-meta { color: #818CF8 !important; }
-.code-caption {
+.expand-icon {
   font-size: 14px;
-  color: var(--text-muted);
-  margin-bottom: 14px;
-  font-family: var(--font-mono);
+  transition: transform 0.3s ease;
 }
-.code-caption .arrow { color: var(--accent); margin-right: 6px; }
+.expand-bar.is-expanded .expand-icon {
+  transform: rotate(180deg);
+}
+.expand-lines {
+  color: var(--text-dim);
+}
 
 .charts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 24px;
 }
 .chart-card {
-  display: block;
+  position: relative;
+  cursor: pointer;
   background: var(--surface-1);
   border: 1px solid var(--border);
   border-radius: 12px;
   overflow: hidden;
-  text-decoration: none;
-  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.2s ease;
 }
 .chart-card:hover {
   border-color: var(--accent);
   transform: translateY(-2px);
   box-shadow: 0 12px 32px -12px var(--accent-glow);
 }
-.chart-card img {
-  width: 100%;
-  aspect-ratio: 16/10;
-  object-fit: contain;
-  background: #FFFFFF;
-  display: block;
-}
-.chart-card-meta {
-  padding: 14px 16px;
-  border-top: 1px solid var(--border);
-}
-.chart-card-head {
-  display: flex; justify-content: space-between; align-items: center;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  margin-bottom: 8px;
-}
-.chart-card-page {
-  color: var(--accent);
-  font-weight: 500;
-}
-.chart-card-type {
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 10px;
-  padding: 2px 7px;
-  border: 1px solid var(--border-bright);
-  border-radius: 4px;
-}
-.chart-card-title {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text);
-  margin-bottom: 4px;
-  line-height: 1.35;
-}
-.chart-card-sub {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--text-muted);
-  line-height: 1.4;
-}
-
-.placeholder {
-  background: var(--surface-1);
-  border: 1px dashed var(--border-bright);
-  border-radius: 12px;
-  padding: 48px 24px;
-  text-align: center;
-}
-.placeholder-icon {
-  font-family: var(--font-mono);
-  font-size: 22px;
-  color: var(--accent);
-  margin-bottom: 14px;
-  opacity: 0.7;
-}
-.placeholder-title {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--text-2);
-  margin-bottom: 6px;
-}
-.placeholder-note {
-  font-size: 12px;
-  color: var(--text-muted);
-  max-width: 360px;
-  margin: 0 auto;
-  line-height: 1.5;
-}
-.placeholder-stack > * + * { margin-top: 16px; }
-
-/* Chart placeholder: richer card waiting for image */
-.chart-placeholder {
-  background: var(--surface-1);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-  display: flex; flex-direction: column;
-  transition: border-color 0.2s ease, transform 0.2s ease;
-}
-.chart-placeholder:hover {
-  border-color: var(--border-bright);
-  transform: translateY(-2px);
-}
-.chart-ph-head {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 10px 14px;
-  border-bottom: 1px solid var(--border);
-  font-family: var(--font-mono);
-  font-size: 11px;
-}
-.chart-ph-page {
-  color: var(--accent);
-  font-weight: 500;
-  letter-spacing: 0.02em;
-}
-.chart-ph-type {
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 10px;
-  padding: 2px 7px;
-  border: 1px solid var(--border-bright);
-  border-radius: 4px;
-}
-.chart-ph-body {
-  flex: 1;
-  padding: 36px 22px;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  text-align: center;
-  aspect-ratio: 16/10;
-  background:
-    repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 12px,
-      rgba(129, 140, 248, 0.025) 12px,
-      rgba(129, 140, 248, 0.025) 13px
-    );
-}
-.chart-ph-icon {
-  font-family: var(--font-mono);
-  font-size: 36px;
-  color: var(--accent);
-  opacity: 0.5;
-  margin-bottom: 16px;
-  line-height: 1;
-}
-.chart-ph-title {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text);
-  margin-bottom: 4px;
-  line-height: 1.3;
-  max-width: 260px;
-}
-.chart-ph-sub {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--text-muted);
-}
+.chart-card img { width: 100%; aspect-ratio: 16/9.5; object-fit: cover; border-bottom: 1px solid var(--border); }
+.chart-card-meta { padding: 18px 20px; }
+.chart-card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.chart-card-page { font-family: var(--font-mono); font-size: 10px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; }
+.chart-card-type { font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; border: 1px solid var(--border-bright); padding: 2px 6px; border-radius: 4px; }
+.chart-card-title { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.chart-card-sub { font-size: 13px; color: var(--text-muted); line-height: 1.4; }
 
 .doc-row {
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  gap: 56px;
-  align-items: flex-start;
-}
-@media (max-width: 720px) {
-  .doc-row { grid-template-columns: 1fr; gap: 32px; }
+  display: flex; gap: 40px; align-items: flex-start;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  flex-wrap: wrap;
 }
 .doc-cover {
+  width: 240px; flex-shrink: 0;
   position: relative;
-  display: block;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8);
-  border: 1px solid var(--border-bright);
-  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.2s ease;
-  transform-style: preserve-3d;
+  box-shadow: 0 20px 40px -12px rgba(0,0,0,0.5);
+  transition: transform 0.2s ease;
 }
-.doc-cover:hover {
-  transform: translateY(-6px) rotateY(-4deg) rotateX(2deg);
-  border-color: var(--accent);
-}
-.doc-cover img { width: 100%; height: auto; }
+.doc-cover:hover { transform: scale(1.02); }
+.doc-cover img { width: 100%; aspect-ratio: 1/1.41; object-fit: cover; }
 .doc-cover-badge {
-  position: absolute;
-  bottom: 12px; left: 12px;
-  background: var(--bg);
-  border: 1px solid var(--border-bright);
-  color: var(--accent);
-  padding: 4px 9px;
-  border-radius: 4px;
+  position: absolute; bottom: 12px; right: 12px;
+  background: rgba(10, 14, 26, 0.85);
+  backdrop-filter: blur(4px);
+  padding: 4px 10px;
+  border-radius: 6px;
   font-family: var(--font-mono);
   font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.doc-info h3 {
-  font-family: var(--font-display);
-  font-size: 24px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  margin-bottom: 14px;
-}
-.doc-info p {
   color: var(--text-2);
-  font-size: 15px;
-  line-height: 1.6;
-  margin-bottom: 20px;
+  border: 1px solid var(--border-bright);
 }
+.doc-info { flex: 1; min-width: 300px; }
+.doc-info h3 { font-family: var(--font-display); font-size: 24px; margin-bottom: 16px; }
+.doc-info p { color: var(--text-2); font-size: 15px; margin-bottom: 32px; line-height: 1.6; }
+
 .doc-attrs {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 14px;
-  padding: 16px 0;
-  margin-bottom: 28px;
-  border-top: 1px solid var(--border);
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+  padding-bottom: 32px;
   border-bottom: 1px solid var(--border);
 }
 .doc-attr-label {
@@ -891,6 +663,55 @@ button { font: inherit; cursor: pointer; }
 }
 .foot-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 
+/* ── Botão de retorno nos dashboards ────────────────────────────── */
+.chart-back-btn {
+  position: absolute;
+  top: 24px; left: 24px;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 20px;
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--bg);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  z-index: 200;
+  cursor: pointer;
+  box-shadow: 0 8px 24px -8px var(--accent-glow);
+}
+.chart-back-btn:hover {
+  background: var(--cyan);
+  border-color: var(--cyan);
+  transform: translateY(-2px);
+  color: var(--bg);
+}
+.chart-back-btn .arrow { font-size: 16px; }
+
+
+/* ── GitHub link no rodapé ──────────────────────────────────────────────── */
+.foot-github {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 6px 12px;
+  background: var(--surface-1);
+  border: 1px solid var(--border-bright);
+  border-radius: 6px;
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  transition: all 0.15s ease;
+}
+.foot-github:hover {
+  background: var(--surface-2);
+  border-color: var(--accent);
+  color: var(--text);
+  transform: translateY(-1px);
+}
+.foot-github svg { color: var(--text-dim); transition: color 0.15s ease; }
+.foot-github:hover svg { color: var(--accent); }
+
 @media (max-width: 640px) {
   .hero { padding: 64px 22px 64px; }
   .timeline { padding: 48px 22px 80px; }
@@ -920,6 +741,8 @@ button { font: inherit; cursor: pointer; }
     </nav>
   </div>
 </header>
+
+<main>
 
 <section class="hero">
   <div class="hero-inner">
@@ -978,11 +801,11 @@ button { font: inherit; cursor: pointer; }
         <div class="meta-value">Databricks · Scikit-learn · Prophet · Power BI</div>
       </div>
     </div>
+
   </div>
 </section>
 
-<main class="timeline">
-
+<div class="timeline">
   <div class="timeline-header">linha do tempo do projeto</div>
 
   <section class="section" id="apresentacao">
@@ -996,7 +819,9 @@ button { font: inherit; cursor: pointer; }
     <h2 class="section-title">Pré-apresentação do projeto</h2>
     <p class="section-lede">A primeira entrega do projeto: doze slides apresentando o tema, os objetivos, as fontes de dados, a arquitetura técnica e a divisão de responsabilidades da equipe. Clique em qualquer slide para visualizar em tela cheia.</p>
 
-    <div class="slides-grid" id="slidesGrid"></div>
+    <div class="slides-grid" id="slidesGrid">
+      <!-- Slides via JS -->
+    </div>
   </section>
 
   <section class="section" id="codigos">
@@ -1010,18 +835,16 @@ button { font: inherit; cursor: pointer; }
     <h2 class="section-title">Os scripts do projeto</h2>
     <p class="section-lede">Os três scripts que sustentam tecnicamente a análise: pipeline de dados, tratamento e aplicação dos modelos de Machine Learning. Todo o processamento acontece dentro do Databricks, e os resultados são consumidos pelo Power BI.</p>
 
-    <div class="placeholder-stack">
-      <div>
-        <p class="code-caption"><span class="arrow">→</span> Pipeline ETL em PySpark: carrega os dados brutos, padroniza textos, trata valores nulos, calcula o KPI de vendas por 100 mil habitantes e grava o resultado como tabela Delta para consumo no Power BI.</p>
-        <div class="code-block">
-          <div class="code-head">
-            <div class="code-head-left">
-              <span class="code-path"><span class="dir">databricks/</span>etl_antidepressivos.py</span>
-              <span class="code-lang">Python · PySpark</span>
-            </div>
-            <button class="copy-btn" data-copy>copy</button>
+    <div class="code-blocks">
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-head-left">
+            <div class="code-path"><span class="dir">databricks/</span>etl_antidepressivos.py</div>
+            <div class="code-lang">Python · PySpark</div>
           </div>
-          <div class="code-body is-collapsed">
+          <button class="copy-btn" data-copy>copy</button>
+        </div>
+        <div class="code-body is-collapsed">
           <pre><code class="language-python"># Importa as funções necessárias do PySpark para transformação dos dados
 from pyspark.sql.functions import col, upper, trim, round, when
 
@@ -1089,615 +912,143 @@ tabela_limpa = (
         # ==========================
 
         # Calcula a quantidade de unidades vendidas para cada 100 mil habitantes
-        # permitindo comparações proporcionais entre estados e regiões
+        # permitir comparações proporcionais entre estados e regiões
         round(
             (col("unidades_vendidas_est") / col("populacao_2022")) * 100000,
             2
-        ).alias("kpi_vendas_por_100mil_hab")
+        ).alias("vendas_por_100mil_hab")
     )
-
-    # Mantém apenas registros a partir de 2019
-    # para análise dos dados mais recentes
-    .filter(col("ano_referencia") >= 2019)
 )
 
-# Salva a tabela tratada no formato Delta
-# para consumo em dashboards e relatórios do Power BI
-(
-    tabela_limpa.write
-    .format("delta")
-    .mode("overwrite")
-    .saveAsTable("workspace.default.antidepressivos_limpos_bi")
-)
+# Salva o resultado final como uma tabela Delta otimizada para o Power BI
+tabela_limpa.write \
+    .format("delta") \
+    .mode("overwrite") \
+    .option("overwriteSchema", "true") \
+    .saveAsTable("workspace.default.antidepressivos_vendas_limpo")
 
-# ==========================
-# AUDITORIA DO PROCESSAMENTO
-# ==========================
-
-# Exibe mensagem de sucesso
-print(f"Processamento concluído com sucesso!")
-
-# Mostra quantidade de registros antes da limpeza
-print(f"Quantidade de registros brutos: {dados_brutos.count()}")
-
-# Mostra quantidade de registros após tratamento e filtros
-print(f"Quantidade de registros limpos: {tabela_limpa.count()}")
-
-# Exibe uma amostra dos primeiros 15 registros para validação visual
-display(tabela_limpa.limit(15))</code></pre>
+# Exibe uma amostra dos dados tratados
+display(tabela_limpa.limit(10))</code></pre>
           <div class="code-fade"></div>
-          </div>
-          <button class="expand-bar" data-expand>
-            <span class="expand-icon">&#8964;</span>
-            <span class="expand-label">ver código completo</span>
-            <span class="expand-lines">· 85 linhas</span>
-          </button>
         </div>
+        <button class="expand-bar" data-expand>
+          <span class="expand-icon">&#8964;</span>
+          <span class="expand-label">ver código completo</span>
+          <span class="expand-lines">· 85 linhas</span>
+        </button>
       </div>
-      <div>
-        <p class="code-caption"><span class="arrow">→</span> Modelo de Regressão Linear (Scikit-learn) que prevê o KPI de vendas por 100 mil habitantes a partir de ano, prevalência de depressão, densidade de psiquiatras e região. Avalia com MAE, RMSE e R² e visualiza os resultados.</p>
-        <div class="code-block">
-          <div class="code-head">
-            <div class="code-head-left">
-              <span class="code-path"><span class="dir">databricks/</span>regressao_linear.py</span>
-              <span class="code-lang">Python · Scikit-learn</span>
-            </div>
-            <button class="copy-btn" data-copy>copy</button>
+
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-head-left">
+            <div class="code-path"><span class="dir">databricks/</span>regressao_linear.py</div>
+            <div class="code-lang">Python · Scikit-Learn</div>
           </div>
-          <div class="code-body is-collapsed">
-          <pre><code class="language-python"># =============================================================================
-# IMPORTAÇÃO DAS BIBLIOTECAS
-# =============================================================================
-
-# Manipulação e análise de dados
-import pandas as pd
+          <button class="copy-btn" data-copy>copy</button>
+        </div>
+        <div class="code-body is-collapsed">
+          <pre><code class="language-python">import pandas as pd
 import numpy as np
-
-# Criação de gráficos
-import matplotlib.pyplot as plt
-
-# Algoritmo de Regressão Linear
 from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score, mean_absolute_error
 
-# Divisão dos dados em treino e teste
-from sklearn.model_selection import train_test_split
+# Carrega os dados tratados do Spark para o Pandas (ambiente Databricks)
+df = spark.table("workspace.default.antidepressivos_vendas_limpo").toPandas()
 
-# Padronização das variáveis
-from sklearn.preprocessing import StandardScaler, LabelEncoder
+# Agrupa as vendas totais por ano para análise nacional
+vendas_anuais = df.groupby("ano_referencia")["vendas_unidades"].sum().reset_index()
 
-# Métricas para avaliação do modelo
-from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+# Prepara as variáveis para o modelo (X = Ano, y = Vendas)
+X = vendas_anuais[["ano_referencia"]].values
+y = vendas_anuais["vendas_unidades"].values
 
+# Inicializa e treina o modelo de Regressão Linear
+modelo = LinearRegression()
+modelo.fit(X, y)
 
-# =============================================================================
-# CARREGAMENTO E PREPARAÇÃO DOS DADOS
-# =============================================================================
+# Realiza as previsões baseadas nos anos históricos
+previsoes = modelo.predict(X)
 
-# Carrega a tabela tratada do ambiente Spark e converte para Pandas
-df = spark.table("workspace.default.antidepressivos_limpos_bi").toPandas()
+# Calcula métricas de desempenho do modelo
+r2 = r2_score(y, previsoes)
+mae = mean_absolute_error(y, previsoes)
 
-# Define a variável alvo que será prevista pelo modelo
-TARGET = "kpi_vendas_por_100mil_hab"
+print(f"Coeficiente de Determinação (R²): {r2:.4f}")
+print(f"Erro Médio Absoluto (MAE): {mae:.2f}")
 
-# Define as variáveis independentes utilizadas na previsão
-FEATURES = [
-    "ano_referencia",
-    "percentual_prevalencia_depressao",
-    "densidade_psiquiatras_por_100mil",
-    "regiao_enc"
-]
+# Projeção para os próximos 3 anos (2025, 2026, 2027)
+anos_futuros = np.array([[2025], [2026], [2027]])
+projecao_vendas = modelo.predict(anos_futuros)
 
-# Cria um codificador para transformar categorias em valores numéricos
-le = LabelEncoder()
+# Exibe os resultados da projeção
+for ano, valor in zip(anos_futuros.flatten(), projecao_vendas):
+    print(f"Projeção de vendas para {ano}: {valor:,.0f} unidades")
 
-# Converte os nomes das regiões em números inteiros
-# Necessário para que o algoritmo consiga processar a informação
-df["regiao_enc"] = le.fit_transform(
-    df["regiao_nome"].fillna("DESCONHECIDO")
-)
+# Exporta os resultados da projeção para uma tabela Spark
+df_projecao = pd.DataFrame({
+    "ano": anos_futuros.flatten(),
+    "vendas_projetadas": projecao_vendas
+})
 
-# Seleciona apenas as colunas necessárias para o modelo
-# e remove registros com valores nulos
-df_model = df[FEATURES + [TARGET]].dropna()
-
-# Variáveis explicativas (entrada)
-X = df_model[FEATURES]
-
-# Variável alvo (saída)
-y = df_model[TARGET]
-
-
-# =============================================================================
-# DIVISÃO DOS DADOS EM TREINO E TESTE
-# =============================================================================
-
-# Separa 80% dos dados para treinamento
-# e 20% para validação do modelo
-X_train, X_test, y_train, y_test = train_test_split(
-    X,
-    y,
-    test_size=0.2,
-    random_state=42
-)
-
-# Cria o objeto responsável pela padronização dos dados
-scaler = StandardScaler()
-
-# Ajusta e transforma os dados de treinamento
-X_train_sc = scaler.fit_transform(X_train)
-
-# Aplica a mesma transformação nos dados de teste
-X_test_sc = scaler.transform(X_test)
-
-
-# =============================================================================
-# TREINAMENTO DO MODELO DE REGRESSÃO LINEAR
-# =============================================================================
-
-# Cria o modelo de Regressão Linear
-model = LinearRegression()
-
-# Treina o modelo utilizando os dados padronizados
-model.fit(X_train_sc, y_train)
-
-
-# =============================================================================
-# REALIZAÇÃO DAS PREVISÕES
-# =============================================================================
-
-# Gera as previsões para o conjunto de teste
-y_pred = model.predict(X_test_sc)
-
-
-# =============================================================================
-# AVALIAÇÃO DO MODELO
-# =============================================================================
-
-# Calcula o Erro Absoluto Médio (MAE)
-print(f"MAE  : {mean_absolute_error(y_test, y_pred):.4f}")
-
-# Calcula a Raiz do Erro Quadrático Médio (RMSE)
-print(f"RMSE : {np.sqrt(mean_squared_error(y_test, y_pred)):.4f}")
-
-# Calcula o coeficiente de determinação (R²)
-print(f"R²   : {r2_score(y_test, y_pred):.4f}")
-
-
-# =============================================================================
-# VISUALIZAÇÃO DOS RESULTADOS
-# =============================================================================
-
-# Cria uma figura com dois gráficos lado a lado
-fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-
-# -----------------------------------------------------------------------------
-# GRÁFICO 1 - VALORES REAIS VS VALORES PREDITOS
-# -----------------------------------------------------------------------------
-
-# Define os limites dos eixos para manter a mesma escala
-lim = [
-    min(y_test.min(), y_pred.min()) * 0.95,
-    max(y_test.max(), y_pred.max()) * 1.05
-]
-
-# Cria gráfico de dispersão
-axes[0].scatter(
-    y_test,
-    y_pred,
-    alpha=0.5,
-    edgecolors="k",
-    linewidths=0.4
-)
-
-# Linha ideal onde valor previsto = valor real
-axes[0].plot(
-    lim,
-    lim,
-    "r--",
-    lw=1.5,
-    label="Ideal"
-)
-
-# Configuração dos rótulos e título
-axes[0].set(
-    xlabel="Real",
-    ylabel="Predito",
-    title="Real vs Predito",
-    xlim=lim,
-    ylim=lim
-)
-
-axes[0].legend()
-
-
-# -----------------------------------------------------------------------------
-# GRÁFICO 2 - DISTRIBUIÇÃO DOS RESÍDUOS
-# -----------------------------------------------------------------------------
-
-# Calcula os resíduos do modelo
-residuos = y_test - y_pred
-
-# Cria histograma dos resíduos
-axes[1].hist(
-    residuos,
-    bins=30,
-    edgecolor="k",
-    color="steelblue",
-    alpha=0.8
-)
-
-# Adiciona linha vertical indicando erro zero
-axes[1].axvline(
-    0,
-    color="red",
-    linestyle="--",
-    lw=1.5
-)
-
-# Configuração dos rótulos e título
-axes[1].set(
-    xlabel="Resíduo",
-    ylabel="Frequência",
-    title="Distribuição dos Resíduos"
-)
-
-
-# Título geral da análise
-plt.suptitle(
-    "Regressão Linear — Antidepressivos Brasil",
-    fontsize=13
-)
-
-# Ajusta automaticamente os espaços do gráfico
-plt.tight_layout()
-
-# Exibe os gráficos
-plt.show()
-
-
-# =============================================================================
-# ANÁLISE DE IMPORTÂNCIA DAS VARIÁVEIS
-# =============================================================================
-
-# Cria uma tabela contendo os coeficientes do modelo
-# Quanto maior o valor absoluto do coeficiente,
-# maior a influência da variável na previsão
-imp = (
-    pd.DataFrame(
-        {
-            "feature": FEATURES,
-            "coef": model.coef_
-        }
-    )
-    .sort_values(
-        "coef",
-        key=abs,
-        ascending=True
-    )
-)</code></pre>
+spark.createDataFrame(df_projecao).write \
+    .mode("overwrite") \
+    .saveAsTable("workspace.default.antidepressivos_projecao_linear")</code></pre>
           <div class="code-fade"></div>
-          </div>
-          <button class="expand-bar" data-expand>
-            <span class="expand-icon">&#8964;</span>
-            <span class="expand-label">ver código completo</span>
-            <span class="expand-lines">· 120 linhas</span>
-          </button>
         </div>
+        <button class="expand-bar" data-expand>
+          <span class="expand-icon">&#8964;</span>
+          <span class="expand-label">ver código completo</span>
+          <span class="expand-lines">· 120 linhas</span>
+        </button>
       </div>
-      <div>
-        <p class="code-caption"><span class="arrow">→</span> Previsão de séries temporais com Prophet: projeta o KPI de vendas por 100 mil habitantes para os próximos 4 anos, usando prevalência de depressão e densidade de psiquiatras como variáveis explicativas. Inclui intervalo de confiança de 95%, validação cruzada (MAE, RMSE, MAPE) e exporta as projeções como tabela Delta para o Power BI.</p>
-        <div class="code-block">
-          <div class="code-head">
-            <div class="code-head-left">
-              <span class="code-path"><span class="dir">databricks/</span>previsao_prophet.py</span>
-              <span class="code-lang">Python · Prophet</span>
-            </div>
-            <button class="copy-btn" data-copy>copy</button>
+
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-head-left">
+            <div class="code-path"><span class="dir">databricks/</span>previsao_prophet.py</div>
+            <div class="code-lang">Python · Prophet</div>
           </div>
-          <div class="code-body is-collapsed">
-          <pre><code class="language-python"># =============================================================================
-# INSTALAÇÃO DA BIBLIOTECA PROPHET
-# =============================================================================
-
-# Instala a biblioteca utilizada para modelagem e previsão de séries temporais
-pip install prophet
-
-
-# =============================================================================
-# IMPORTAÇÃO DAS BIBLIOTECAS
-# =============================================================================
-
-# Manipulação de dados
+          <button class="copy-btn" data-copy>copy</button>
+        </div>
+        <div class="code-body is-collapsed">
+          <pre><code class="language-python">from prophet import Prophet
 import pandas as pd
-import numpy as np
 
-# Criação de gráficos
-import matplotlib.pyplot as plt
+# Carrega dados históricos consolidados
+df_spark = spark.table("workspace.default.antidepressivos_vendas_limpo")
+df_pandas = df_spark.toPandas()
 
-# Modelo de previsão temporal Prophet
-from prophet import Prophet
-
-# Ferramentas para validação do modelo
-from prophet.diagnostics import cross_validation, performance_metrics
-
-
-# =============================================================================
-# CARREGAMENTO E PREPARAÇÃO DOS DADOS
-# =============================================================================
-
-# Carrega os dados tratados da tabela Delta para um DataFrame Pandas
-df_raw = spark.table("workspace.default.antidepressivos_limpos_bi").toPandas()
-
-# Agrupa os dados por ano para criar uma série temporal nacional
-df_ts = (
-    df_raw
-    .groupby("ano_referencia", as_index=False)
-    .agg(
-        # Média anual do KPI de vendas por 100 mil habitantes
-        y=("kpi_vendas_por_100mil_hab", "mean"),
-
-        # Média anual da prevalência de depressão
-        prevalencia=("percentual_prevalencia_depressao", "mean"),
-
-        # Média anual da densidade de psiquiatras
-        psiquiatras=("densidade_psiquiatras_por_100mil", "mean"),
-    )
-
-    # Cria a coluna de data exigida pelo Prophet
-    .assign(
-        ds=lambda d: pd.to_datetime(
-            d["ano_referencia"].astype(str) + "-01-01"
-        )
-    )
-
-    # Organiza os registros em ordem cronológica
-    .sort_values("ds")
-
-    # Reorganiza os índices
-    .reset_index(drop=True)
+# Prepara o DataFrame para o padrão exigido pelo Prophet
+# ds: coluna de data (ano), y: coluna de valor (vendas)
+df_prophet = (
+    df_pandas.groupby("ano_referencia")["vendas_unidades"]
+    .sum()
+    .reset_index()
+    .rename(columns={"ano_referencia": "ds", "vendas_unidades": "y"})
 )
 
+# Converte o ano para o primeiro dia de janeiro para o Prophet interpretar como data
+df_prophet["ds"] = pd.to_datetime(df_prophet["ds"].astype(str) + "-01-01")
 
-# =============================================================================
-# CONFIGURAÇÃO E TREINAMENTO DO MODELO PROPHET
-# =============================================================================
+# Inicializa o modelo Prophet com intervalo de confiança de 95%
+modelo = Prophet(interval_width=0.95, yearly_seasonality=True)
 
-# Cria o modelo de previsão temporal
-model = Prophet(
+# Treina o modelo com os dados históricos
+modelo.fit(df_prophet)
 
-    # Desabilita sazonalidades automáticas
-    yearly_seasonality=False,
-    weekly_seasonality=False,
-    daily_seasonality=False,
+# Cria um DataFrame com os próximos 5 anos para previsão
+futuro = modelo.make_future_dataframe(periods=5, freq='Y')
 
-    # Controla a sensibilidade às mudanças de tendência
-    changepoint_prior_scale=0.15,
+# Gera as previsões
+previsao = modelo.predict(futuro)
 
-    # Define intervalo de confiança de 95%
-    interval_width=0.95,
-)
-
-# Adiciona variáveis externas que influenciam a previsão
-model.add_regressor("prevalencia")
-model.add_regressor("psiquiatras")
-
-# Treina o modelo utilizando os dados históricos
-model.fit(
-    df_ts[
-        [
-            "ds",
-            "y",
-            "prevalencia",
-            "psiquiatras"
-        ]
-    ]
-)
-
-
-# =============================================================================
-# CRIAÇÃO DAS PREVISÕES FUTURAS
-# =============================================================================
-
-# Define quantos anos serão projetados
-ANOS_FUTURO = 4
-
-# Calcula médias históricas para utilização como valores de segurança
-# caso existam dados faltantes
-fallback_prev = df_ts["prevalencia"].dropna().mean()
-fallback_psiq = df_ts["psiquiatras"].dropna().mean()
-
-# Cria calendário futuro com mais 4 anos
-future = model.make_future_dataframe(
-    periods=ANOS_FUTURO,
-    freq="YS"
-)
-
-# Normaliza datas para evitar problemas de timezone
-future["ds_norm"] = pd.to_datetime(
-    future["ds"]
-).dt.normalize()
-
-df_ts["ds_norm"] = pd.to_datetime(
-    df_ts["ds"]
-).dt.normalize()
-
-# Cria dicionários para recuperar os valores históricos
-lookup_prev = (
-    df_ts
-    .set_index("ds_norm")["prevalencia"]
-    .to_dict()
-)
-
-lookup_psiq = (
-    df_ts
-    .set_index("ds_norm")["psiquiatras"]
-    .to_dict()
-)
-
-# Preenche a variável prevalência
-future["prevalencia"] = future["ds_norm"].apply(
-    lambda d: lookup_prev.get(d, fallback_prev)
-)
-
-# Preenche a variável psiquiatras
-future["psiquiatras"] = future["ds_norm"].apply(
-    lambda d: lookup_psiq.get(d, fallback_psiq)
-)
-
-# Garante ausência de valores nulos
-future["prevalencia"] = future["prevalencia"].fillna(
-    fallback_prev
-)
-
-future["psiquiatras"] = future["psiquiatras"].fillna(
-    fallback_psiq
-)
-
-# Remove colunas auxiliares
-future = future.drop(columns=["ds_norm"])
-df_ts = df_ts.drop(columns=["ds_norm"])
-
-# Executa as previsões
-forecast = model.predict(future)
-
-
-# =============================================================================
-# VISUALIZAÇÃO DAS PREVISÕES
-# =============================================================================
-
-# Gráfico padrão do Prophet
-model.plot(
-    forecast,
-    figsize=(12, 5)
-)
-
-plt.title(
-    "Previsão — KPI Vendas / 100 mil hab."
-)
-
-plt.tight_layout()
-plt.show()
-
-
-# -----------------------------------------------------------------------------
-# COMPONENTES DA PREVISÃO
-# -----------------------------------------------------------------------------
-
-# Exibe decomposição dos componentes da série temporal
-model.plot_components(forecast)
-
-plt.tight_layout()
-plt.show()
-
-
-# -----------------------------------------------------------------------------
-# GRÁFICO PERSONALIZADO
-# -----------------------------------------------------------------------------
-
-# Cria gráfico detalhado com histórico e projeção
-fig, ax = plt.subplots(figsize=(12, 5))
-
-# Intervalo de confiança de 95%
-ax.fill_between(
-    forecast["ds"],
-    forecast["yhat_lower"],
-    forecast["yhat_upper"],
-    alpha=0.2,
-    color="royalblue",
-    label="IC 95%"
-)
-
-# Linha de previsão
-ax.plot(
-    forecast["ds"],
-    forecast["yhat"],
-    color="royalblue",
-    lw=2,
-    label="Previsão"
-)
-
-# Pontos dos dados históricos
-ax.scatter(
-    df_ts["ds"],
-    df_ts["y"],
-    color="black",
-    zorder=5,
-    s=60,
-    label="Dados reais"
-)
-
-# Linha indicando início da projeção
-ax.axvline(
-    df_ts["ds"].max(),
-    color="red",
-    linestyle="--",
-    lw=1.2,
-    label="Início da projeção"
-)
-
-# Configurações do gráfico
-ax.set(
-    title="Série Temporal + Projeção — Prophet",
-    xlabel="Ano",
-    ylabel="KPI Vendas / 100 mil hab."
-)
-
-ax.legend()
-
-plt.tight_layout()
-plt.show()
-
-
-# =============================================================================
-# VALIDAÇÃO CRUZADA DO MODELO
-# =============================================================================
-
-try:
-
-    # Executa validação cruzada temporal
-    df_cv = cross_validation(
-        model,
-        initial="730 days",
-        period="365 days",
-        horizon="365 days",
-        disable_tqdm=True
-    )
-
-    # Calcula métricas de desempenho
-    df_perf = performance_metrics(df_cv)
-
-    # Exibe MAE, RMSE e MAPE
-    display(
-        df_perf[
-            [
-                "horizon",
-                "mae",
-                "rmse",
-                "mape"
-            ]
-        ]
-    )
-
-except Exception as e:
-
-    # Caso não haja dados suficientes para validação
-    print(
-        f"Validação cruzada ignorada: {e}"
-    )
-
-
-# =============================================================================
-# EXPORTAÇÃO DOS RESULTADOS
-# =============================================================================
-
-# Seleciona apenas as colunas relevantes da previsão
-forecast_out = forecast[
+# Seleciona as colunas de interesse para exportação
+forecast_out = previsao[
     [
-        "ds",
-        "yhat",
-        "yhat_lower",
-        "yhat_upper"
+        "ds",      # Data
+        "yhat",    # Previsão Central
+        "yhat_lower", # Limite Inferior
+        "yhat_upper"  # Limite Superior
     ]
 ].copy()
 
@@ -1722,13 +1073,12 @@ print(
     "Tabela salva: antidepressivos_previsao_prophet"
 )</code></pre>
           <div class="code-fade"></div>
-          </div>
-          <button class="expand-bar" data-expand>
-            <span class="expand-icon">&#8964;</span>
-            <span class="expand-label">ver código completo</span>
-            <span class="expand-lines">· 160 linhas</span>
-          </button>
         </div>
+        <button class="expand-bar" data-expand>
+          <span class="expand-icon">&#8964;</span>
+          <span class="expand-label">ver código completo</span>
+          <span class="expand-lines">· 160 linhas</span>
+        </button>
       </div>
     </div>
   </section>
@@ -1746,7 +1096,7 @@ print(
 
     <div class="charts-grid">
       <div class="chart-card" data-chart="chart-1.jpg">
-        <img src="assets/charts/chart-1.jpg" alt="Evolução das Vendas Totais (2019–2024)" loading="lazy" />
+        <img src="chart-1.jpg" alt="Evolução das Vendas Totais (2019–2024)" loading="lazy" />
         <div class="chart-card-meta">
           <div class="chart-card-head">
             <span class="chart-card-page">Página 01</span>
@@ -1757,8 +1107,8 @@ print(
         </div>
       </div>
 
-      <div class="chart-card" data-chart="assets/charts/chart-2.jpg">
-        <img src="assets/charts/chart-2.jpg" alt="Previsão de Vendas de Antidepressivos no Brasil (2019–2029)" loading="lazy" />
+      <div class="chart-card" data-chart="chart-2.jpg">
+        <img src="chart-2.jpg" alt="Previsão de Vendas de Antidepressivos no Brasil (2019–2029)" loading="lazy" />
         <div class="chart-card-meta">
           <div class="chart-card-head">
             <span class="chart-card-page">Página 02</span>
@@ -1769,8 +1119,8 @@ print(
         </div>
       </div>
 
-      <div class="chart-card" data-chart="assets/charts/chart-3.jpg">
-        <img src="assets/charts/chart-3.jpg" alt="Concentração de Vendas no Território Nacional (2019–2024)" loading="lazy" />
+      <div class="chart-card" data-chart="chart-3.jpg">
+        <img src="chart-3.jpg" alt="Concentração de Vendas no Território Nacional (2019–2024)" loading="lazy" />
         <div class="chart-card-meta">
           <div class="chart-card-head">
             <span class="chart-card-page">Página 03</span>
@@ -1781,8 +1131,8 @@ print(
         </div>
       </div>
 
-      <div class="chart-card" data-chart="assets/charts/chart-4.jpg">
-        <img src="assets/charts/chart-4.jpg" alt="Evolução de Vendas por 100 mil Habitantes (2019–2024)" loading="lazy" />
+      <div class="chart-card" data-chart="chart-4.jpg">
+        <img src="chart-4.jpg" alt="Evolução de Vendas por 100 mil Habitantes (2019–2024)" loading="lazy" />
         <div class="chart-card-meta">
           <div class="chart-card-head">
             <span class="chart-card-page">Página 04</span>
@@ -1793,8 +1143,8 @@ print(
         </div>
       </div>
 
-      <div class="chart-card" data-chart="assets/charts/chart-5a.jpg">
-        <img src="assets/charts/chart-5a.jpg" alt="Média de Vendas por Região — Pré-Pandemia (2019–2020)" loading="lazy" />
+      <div class="chart-card" data-chart="chart-5a.jpg">
+        <img src="chart-5a.jpg" alt="Média de Vendas por Região — Pré-Pandemia (2019–2020)" loading="lazy" />
         <div class="chart-card-meta">
           <div class="chart-card-head">
             <span class="chart-card-page">Página 05 · A</span>
@@ -1805,8 +1155,8 @@ print(
         </div>
       </div>
 
-      <div class="chart-card" data-chart="assets/charts/chart-5b.jpg">
-        <img src="assets/charts/chart-5b.jpg" alt="Média de Vendas por Região — Pós-Pandemia (2021–2024)" loading="lazy" />
+      <div class="chart-card" data-chart="chart-5b.jpg">
+        <img src="chart-5b.jpg" alt="Média de Vendas por Região — Pós-Pandemia (2021–2024)" loading="lazy" />
         <div class="chart-card-meta">
           <div class="chart-card-head">
             <span class="chart-card-page">Página 05 · B</span>
@@ -1817,8 +1167,8 @@ print(
         </div>
       </div>
 
-      <div class="chart-card" data-chart="assets/charts/chart-6.jpg">
-        <img src="assets/charts/chart-6.jpg" alt="Correlação: Prevalência de Depressão vs Vendas por Estado" loading="lazy" />
+      <div class="chart-card" data-chart="chart-6.jpg">
+        <img src="chart-6.jpg" alt="Correlação: Prevalência de Depressão vs Vendas por Estado" loading="lazy" />
         <div class="chart-card-meta">
           <div class="chart-card-head">
             <span class="chart-card-page">Página 06</span>
@@ -1843,8 +1193,8 @@ print(
     <p class="section-lede">O documento final do projeto, formatado de acordo com o roteiro oficial da disciplina. Quinze páginas que cobrem o diagnóstico, o planejamento, o desenvolvimento técnico e o encerramento — incluindo os relatos individuais de cada integrante.</p>
 
     <div class="doc-row">
-      <a href="assets/docs/Roteiro_Extensao_Antidepressivos.pdf" target="_blank" rel="noopener" class="doc-cover" aria-label="Abrir o roteiro de extensão em PDF">
-        <img src="assets/roteiro-capa.jpg" alt="Capa do roteiro de extensão" />
+      <a href="Roteiro_Extensao_Antidepressivos.pdf" target="_blank" rel="noopener" class="doc-cover" aria-label="Abrir o roteiro de extensão em PDF">
+        <img src="roteiro-capa.jpg" alt="Capa do roteiro de extensão" />
         <span class="doc-cover-badge">PDF · 15 págs</span>
       </a>
       <div class="doc-info">
@@ -1871,8 +1221,8 @@ print(
         </div>
 
         <div class="btn-row">
-          <a href="assets/docs/Roteiro_Extensao_Antidepressivos.pdf" target="_blank" rel="noopener" class="btn btn-primary">abrir pdf <span class="arrow">→</span></a>
-          <a href="assets/docs/Roteiro_Extensao_Antidepressivos.docx" class="btn btn-ghost" download>baixar .docx</a>
+          <a href="Roteiro_Extensao_Antidepressivos.pdf" target="_blank" rel="noopener" class="btn btn-primary">abrir pdf <span class="arrow">→</span></a>
+          <a href="Roteiro_Extensao_Antidepressivos.docx" class="btn btn-ghost" download>baixar .docx</a>
         </div>
       </div>
     </div>
@@ -1920,7 +1270,7 @@ for (let i = 1; i <= TOTAL_SLIDES; i++) {
   card.className = 'slide-card';
   card.dataset.index = i;
   card.innerHTML = `
-    <img src="assets/slides/slide-${n}.jpg" alt="Slide ${i}" loading="lazy" />
+    <img src="slide-${n}.jpg" alt="Slide ${i}" loading="lazy" />
     <div class="slide-overlay">
       <span class="num">slide_${n}</span>
       <span class="zoom">⤢ expand</span>
@@ -1944,7 +1294,7 @@ function closeLB() {
 }
 function updateLB() {
   const n = String(lbIndex).padStart(2, '0');
-  lbImg.src = `assets/slides/slide-${n}.jpg`;
+  lbImg.src = `slide-${n}.jpg`;
   lbImg.alt = `Slide ${lbIndex}`;
   lbCurrent.textContent = n;
 }

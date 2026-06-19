@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
+<!-- Bibliotecas na raiz -->
 <link rel="stylesheet" href="atom-one-dark.min.css">
 <script src="highlight.min.js"></script>
 <script src="python.min.js"></script>
@@ -644,6 +645,41 @@ button { font: inherit; cursor: pointer; }
 .btn .arrow { transition: transform 0.15s ease; }
 .btn:hover .arrow { transform: translateX(2px); }
 
+/* ── Botão Databricks Especial ─────────────────────────────────────────── */
+.databricks-card {
+  background: linear-gradient(135deg, rgba(255, 54, 33, 0.05) 0%, rgba(129, 140, 248, 0.05) 100%);
+  border: 1px solid rgba(255, 54, 33, 0.2);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.db-info { display: flex; align-items: center; gap: 16px; }
+.db-icon {
+  width: 48px; height: 48px;
+  background: #FF3621;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  color: white;
+  font-size: 24px;
+  box-shadow: 0 8px 20px -6px rgba(255, 54, 33, 0.4);
+}
+.db-text h4 { font-family: var(--font-display); font-size: 18px; margin-bottom: 4px; }
+.db-text p { font-size: 13px; color: var(--text-muted); }
+.btn-db {
+  background: #FF3621;
+  color: white;
+  border-color: #FF3621;
+}
+.btn-db:hover {
+  background: #E52E1B;
+  border-color: #E52E1B;
+  box-shadow: 0 8px 24px -8px rgba(255, 54, 33, 0.4);
+  color: white;
+}
+
 .foot {
   border-top: 1px solid var(--border);
   padding: 48px 32px;
@@ -834,6 +870,18 @@ button { font: inherit; cursor: pointer; }
     </div>
     <h2 class="section-title">Os scripts do projeto</h2>
     <p class="section-lede">Os três scripts que sustentam tecnicamente a análise: pipeline de dados, tratamento e aplicação dos modelos de Machine Learning. Todo o processamento acontece dentro do Databricks, e os resultados são consumidos pelo Power BI.</p>
+
+    <!-- Botão Databricks Notebook -->
+    <div class="databricks-card">
+      <div class="db-info">
+        <div class="db-icon">D</div>
+        <div class="db-text">
+          <h4>Notebook Databricks</h4>
+          <p>Download do arquivo .dbc para importar no seu ambiente Databricks</p>
+        </div>
+      </div>
+      <a href="antidepressivos_limpos_bi.dbc" class="btn btn-db" download>baixar notebook .dbc</a>
+    </div>
 
     <div class="code-blocks">
       <div class="code-block">
@@ -1238,7 +1286,7 @@ print(
     </div>
     <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
       <span>uso de antidepressivos · pós-pandemia · br</span>
-      <a href="https://github.com/isacandidos/site_projeto_atidepressivos.git" target="_blank" rel="noopener" class="foot-github" aria-label="Repositório no GitHub">
+      <a href="https://github.com/isacandidos/site_antidepressivos" target="_blank" rel="noopener" class="foot-github" aria-label="Repositório no GitHub">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.84 1.236 1.84 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.418-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
         github
       </a>
@@ -1261,6 +1309,20 @@ print(
 
 <script>
 document.body.classList.add('has-js');
+
+// Fallback para imagens quebradas
+document.addEventListener('error', function(e) {
+  if (e.target.tagName.toLowerCase() === 'img') {
+    const src = e.target.getAttribute('src');
+    if (src && (src.includes('assets/') || src.includes('/'))) {
+      const fileName = src.split('/').pop();
+      if (e.target.dataset.triedRoot !== 'true') {
+        e.target.dataset.triedRoot = 'true';
+        e.target.src = fileName;
+      }
+    }
+  }
+}, true);
 
 const TOTAL_SLIDES = 12;
 const slidesGrid = document.getElementById('slidesGrid');
@@ -1309,7 +1371,6 @@ document.getElementById('lbNext').addEventListener('click', nextLB);
 document.getElementById('lbPrev').addEventListener('click', prevLB);
 lb.addEventListener('click', e => { if (e.target === lb) closeLB(); });
 
-// ── Lightbox para Dashboards ────────────────────────────────────────────────
 const chartLb = document.getElementById('chartLightbox');
 const chartLbImg = document.getElementById('chartLbImg');
 const chartBackBtn = document.getElementById('chartBack');
@@ -1320,12 +1381,10 @@ function openChartLB(src, alt) {
   chartLb.classList.add('is-open');
   document.body.style.overflow = 'hidden';
 }
-
 function closeChartLB() {
   chartLb.classList.remove('is-open');
   document.body.style.overflow = '';
 }
-
 document.querySelectorAll('.chart-card').forEach(card => {
   card.addEventListener('click', () => {
     const src = card.dataset.chart;
@@ -1333,7 +1392,6 @@ document.querySelectorAll('.chart-card').forEach(card => {
     openChartLB(src, alt);
   });
 });
-
 chartBackBtn.addEventListener('click', closeChartLB);
 chartLb.addEventListener('click', e => { if (e.target === chartLb) closeChartLB(); });
 
@@ -1357,9 +1415,6 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0, rootMargin: '0px 0px -5% 0px' });
 document.querySelectorAll('.section').forEach(s => observer.observe(s));
-if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  document.querySelectorAll('.section').forEach(s => s.classList.add('is-visible'));
-}
 
 document.querySelectorAll('[data-copy]').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -1375,14 +1430,10 @@ document.querySelectorAll('[data-copy]').forEach(btn => {
 
 if (window.hljs) hljs.highlightAll();
 
-// ── Expand / Collapse dos blocos de código ──────────────────────────────────
 (function () {
   document.querySelectorAll('[data-expand]').forEach(function (bar) {
     var body = bar.previousElementSibling;
-    // garante que o estado inicial está colapsado
     body.classList.add('is-collapsed');
-    body.classList.remove('is-expanded');
-
     bar.addEventListener('click', function () {
       var expanded = body.classList.contains('is-expanded');
       if (expanded) {

@@ -880,7 +880,7 @@ button { font: inherit; cursor: pointer; }
           <p>Download do arquivo .dbc para importar no seu ambiente Databricks</p>
         </div>
       </div>
-      <a href="antidepressivos_limpos_bi.dbc" class="btn btn-db" download>baixar notebook .dbc</a>
+      <a href="antidepressivos_limpos_bi.zip" class="btn btn-db" download="antidepressivos_limpos_bi.zip" onclick="checkFile(this, event)">baixar notebook .zip</a>
     </div>
 
     <div class="code-blocks">
@@ -1429,6 +1429,18 @@ document.querySelectorAll('[data-copy]').forEach(btn => {
 });
 
 if (window.hljs) hljs.highlightAll();
+
+// Função para verificar se o arquivo existe antes de baixar
+function checkFile(el, ev) {
+  fetch(el.href, { method: 'HEAD' }).then(res => {
+    if (!res.ok) {
+      ev.preventDefault();
+      alert('O arquivo "antidepressivos_limpos_bi.zip" ainda não foi encontrado no servidor. Verifique se você já subiu ele para a raiz do seu repositório no GitHub!');
+    }
+  }).catch(() => {
+    // Se houver erro de CORS ou outro, deixa o navegador tentar baixar normalmente
+  });
+}
 
 (function () {
   document.querySelectorAll('[data-expand]').forEach(function (bar) {
